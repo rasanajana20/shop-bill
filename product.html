@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Billing System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            padding: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            flex: 1;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: white;
+            font-size: 12px;
+        }
+
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        table th {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        .bottom-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 18px;
+            }
+
+            button {
+                padding: 8px;
+                font-size: 12px;
+            }
+
+            .buttons, .bottom-buttons {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            table th, table td {
+                padding: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Shop Billing System</h1>
+
+        <div class="form-group">
+            <label for="itemNo">Item No</label>
+            <input type="text" id="itemNo" placeholder="Enter item number">
+        </div>
+
+        <div class="form-group">
+            <label for="itemName">Item Name</label>
+            <input type="text" id="itemName" placeholder="Enter item name">
+        </div>
+
+        <div class="form-group">
+            <label for="price">Price</label>
+            <input type="number" id="price" placeholder="Enter price">
+        </div>
+
+        <div class="buttons">
+            <button onclick="addToTable()">Add</button>
+            <button onclick="deleteSelected()">Delete</button>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Select</th>
+                    <th>Item No</th>
+                    <th>Item Name</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody id="itemTable">
+                <!-- Dynamic rows will be added here -->
+            </tbody>
+        </table>
+
+    </div>
+
+    <script>
+        function addToTable() {
+            const itemNo = document.getElementById('itemNo').value;
+            const itemName = document.getElementById('itemName').value;
+            const price = document.getElementById('price').value;
+
+            if (itemNo && itemName && price) {
+                const table = document.getElementById('itemTable');
+                const row = table.insertRow();
+
+                row.innerHTML = `
+                    <td><input type='checkbox' /></td>
+                    <td>${itemNo}</td>
+                    <td>${itemName}</td>
+                    <td>${price}</td>
+                `;
+
+                clearForm();
+            } else {
+                alert('Please fill all fields!');
+            }
+        }
+
+        function deleteSelected() {
+            const table = document.getElementById('itemTable');
+            const checkboxes = table.querySelectorAll('input[type="checkbox"]');
+
+            checkboxes.forEach((checkbox, index) => {
+                if (checkbox.checked) {
+                    table.deleteRow(index);
+                }
+            });
+        }
+
+        function clearForm() {
+            document.getElementById('itemNo').value = '';
+            document.getElementById('itemName').value = '';
+            document.getElementById('price').value = '';
+        }
+    </script>
+</body>
+</html>
